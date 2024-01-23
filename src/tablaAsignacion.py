@@ -2,7 +2,6 @@ from class_bcolors_enum import Colors
 
 
 class TablaAsignacion:
-
     # podemos utilizar este ejercicio para sobrecarga
     # de operaciones sobre listas
     def __init__(self):
@@ -32,17 +31,20 @@ class TablaAsignacion:
             "E",
         ]
 
+    def __len__(self):
+        return len(self.getTabla())
+
+    def __repr__(self):
+        return str(self.getTabla())
+
     def getTabla(self):
         return self.tabla
 
     def getLetra(self, posicion):
         try:
-            return self.tabla[posicion]
+            return self.getTabla()[posicion]
         except IndexError:
             return "Posicion letra fuera de rango"
-
-    def getModulo(self):
-        return len(self.getTabla())
 
     def isLetraPermitida(self, letra):
         return letra in self.getTabla()
@@ -52,15 +54,11 @@ class TablaAsignacion:
         # Dividirlo por el número de letras (actualmente 23)
         # y obtener el resto (división módulo)
         # Consultar TablaAsignacion con ese resto = posicion
-        posicion = int(DNI) % self.getModulo()
+        posicion = int(DNI) % len(self)
         return self.getLetra(posicion)
-
-    def mostrarTabla(self):
-        print(self.getTabla())
 
 
 if __name__ == "__main__":
-
     import random
 
     tabla = TablaAsignacion()
@@ -72,14 +70,14 @@ if __name__ == "__main__":
     print("\n## ACCESO POR POSICION ##\n")
 
     print(tabla.getLetra(0))  # T
-    print(tabla.getLetra(22)) # E
-    print(tabla.getLetra(30)) # E
+    print(tabla.getLetra(22))  # E
+    print(tabla.getLetra(30))  # E
 
     print("\n## LETRAS NO PERMITIDAS ##\n")
 
     letrasNoPermitidas = ["I", "Ñ", "O", "U"]
     for letra in letrasNoPermitidas:
-        print("Letra %c: %s" % (letra, tabla.isLetraPermitida(letra)))
+        print(f"Letra {letra}: {tabla.isLetraPermitida(letra)}")
 
     casosTest = [  # casos test OK
         "78484464T",
