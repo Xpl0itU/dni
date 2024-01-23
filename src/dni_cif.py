@@ -1,9 +1,10 @@
 from tablaAsignacion import TablaAsignacion
 from class_bcolors_enum import Colors
 
+LONGITUD_DNI = 9
+
 
 class Dni:
-
     def __init__(self, cadena=""):
         self.dni = cadena
         self.numeroSano = False
@@ -46,8 +47,7 @@ class Dni:
                 and self.checkLetraValida()
             )
             return self.getLetraSana()
-        else:
-            return False
+        return False
 
     def obtenerLetra(self):
         # calcularLetra no puede ejecutarse si antes
@@ -55,41 +55,39 @@ class Dni:
         # en checkDni y checkletra
         if self.getNumeroSano():
             return self.tabla.calcularLetra(self.getParteNumericaDni())
-        else:
-            return None
+        return None
 
     ### parte PRIVADA ###
 
     def checkLongitud(self):
-        return len(self.getDni()) == 9
+        return len(self.getDni()) == LONGITUD_DNI
 
     def checkNumero(self):
-        return self.dni[:-1].isdigit()
+        return self.getDni()[:-1].isdigit()
 
     def checkLetraValida(self):
         if self.getNumeroSano():
             return self.getParteAlfabeticaDni() == self.obtenerLetra()
-        else:
-            return False
+        return False
 
     def getParteAlfabeticaDni(self):
-        return self.dni[-1]
+        return self.getDni()[-1]
 
     def getParteNumericaDni(self):
         if self.getNumeroSano():
-            return self.dni[:-1]
-        else:
-            return False
+            return self.getDni()[:-1]
+        return False
 
 
 if __name__ == "__main__":
-
     import random
 
     def prettyFormatter(condition, message):
-        print(f"{Colors.OKGREEN} {message} {Colors.ENDC}"
-                  if condition
-                  else f"{Colors.FAIL} {message} {Colors.ENDC}")
+        print(
+            f"{Colors.OKGREEN} {message} {Colors.ENDC}"
+            if condition
+            else f"{Colors.FAIL} {message} {Colors.ENDC}"
+        )
 
     ### Casos test ALEATORIOS ###
 
@@ -104,7 +102,7 @@ if __name__ == "__main__":
             # ASCII 48-57 = 0-9    65-90 = A-Z   58 = ":"
             # generamos un numero aleatorio entre 48 y 58
             caracterAscii = random.randrange(48, 58 + 1, 1)
-            # convertimos el numero ASCII a caracter. 
+            # convertimos el numero ASCII a caracter.
             # chr() toma el argumento como codigo ASCII de un caracter
             caso = caso + chr(caracterAscii)
         # en la ultima posicion añado una letra A-Z
@@ -120,7 +118,7 @@ if __name__ == "__main__":
         print(dni.getDni())
         dni.checkCIF()
         # print("dni --->", dni.getNumeroSano())
-        # print("Letra --->", dni.getLetraSana())
+        # print("Letra --->", dni.getLetraSana())
         # print("La letra es", dni.obtenerLetra())
         prettyFormatter(dni.getNumeroSano(), dni.getDni())
         prettyFormatter(dni.getLetraSana(), dni.obtenerLetra())
