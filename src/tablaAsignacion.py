@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
     print("\n## TABLA ##\n")
 
-    tabla.mostrarTabla()
+    print(tabla)
 
     print("\n## ACCESO POR POSICION ##\n")
 
